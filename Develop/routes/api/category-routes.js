@@ -5,22 +5,12 @@ const { Category, Product } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
-    const catagory_name = await catagory_name.findAll({
-      include: [
-        {
-          model: Attainable,
-          include: [
-            {
-              model: Category
-            }
-
-          ]
-        },
-      ],
+    const category_name = await Category.findAll({
+      include: [Product],
 
     });
-    console.log("catagory")
-    res.status(200).json(data);
+    console.log("category")
+    res.status(200).json(category_name);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -33,62 +23,60 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const catagory_name = await catagory_name.findOne({
+    const category_name = await Category.findOne({
       where: {
         id: req.params.id,
       },
-      include: [{
-        model: Attainable,
-        include: [
-          {
-            model: Category
-          }
-        ]
-      }]
-
-
-
+      include: [Product]
     });
-    console.log("catagory")
-    res.status(200).json(data);
+    console.log("category")
+    res.status(200).json(category_name);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new category
+  try {
+    const category_name = await Category.create(req.body)
+  
+console.log("category")
+  res.status(200).json(category_name);
+} catch (error) {
+  res.status(500).json(error);
+}
 });
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const catagory_name = await catagory_name.updateOne({
+    const category_name = await Category.updateOne({
       where: {
         id: req.params.id,
       },
-      include: [{
-        model: Attainable,
-        include: [
-          {
-            model: Category
-          }
-        ]
-      }]
-
-
-
     });
-    console.log("catagory")
-    res.status(200).json(data);
+    console.log("category")
+    res.status(200).json(category_name);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
-});
+  try {
+    const category_name = await Category.destroy({
+      where: {
+        id: req.params.id
+      }});
+      console.log("category")
+      res.status(200).json(category_name);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+ 
 
 module.exports = router;
