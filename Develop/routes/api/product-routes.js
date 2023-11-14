@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     include:[
       Category,
       {
-        model:[Tag],
+        model: Tag,
         through:ProductTag
       }
     ]
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
     include: [
       Category,
       {
-        model:[Tag],
+        model:Tag,
       }
     ]
   }).then((productData) => {
@@ -38,6 +38,7 @@ router.get('/:id', (req, res) => {
 
 // create new product
 router.post('/', (req, res) => {
+  console.log("hit");
   /* req.body should look like this...
     {
       product_name: "Basketball",
